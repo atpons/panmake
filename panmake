@@ -1,0 +1,24 @@
+#!/bin/bash
+
+DIR=`dirname ${0}`
+source $DIR/.env
+
+while getopts :m:s: OPT
+do
+  case $OPT in
+    "m" ) FLG_M="TRUE" ; VALUE_M="$OPTARG" ;;
+    "s" ) FLG_S="TRUE" ; VALUE_S="$OPTARG" ;;
+      * ) echo "Usage: $CMDNAME [-s] template OR $CMDNAME [-m] file" 1>&2
+          exit 1 ;;
+  esac
+done
+
+if [ "$FLG_S" = "TRUE" ]; then
+  echo PANMAKE_TEMPLATE=$VALUE_S > $DIR/.env
+fi
+
+FILE_NAME=`basename ${VALUE_M} .md`
+
+if [ "$FLG_M" = "TRUE" ]; then
+  pandoc -F pandoc-crossref $VALUE_M -o $FILE_NAME.pdf --template=$DIR/templates/$PANMAKE_TEMPLATE --latex-engine=lualatex -N --listings
+fi
