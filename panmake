@@ -20,5 +20,5 @@ fi
 FILE_NAME=`basename ${VALUE_M} .md`
 
 if [ "$FLG_M" = "TRUE" ]; then
-  pandoc -F pandoc-crossref $VALUE_M -o $FILE_NAME.pdf --template=$DIR/templates/$PANMAKE_TEMPLATE --latex-engine=lualatex -N --listings
+  pandoc -F pandoc-crossref $VALUE_M -o $FILE_NAME.pdf --template=$DIR/templates/$PANMAKE_TEMPLATE.tex --latex-engine=lualatex -N --listings
 fi
